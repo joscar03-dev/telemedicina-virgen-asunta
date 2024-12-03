@@ -21,9 +21,8 @@ class Paciente extends Model
         'usuario_id', // Relación con usuario (opcional)
     ];
 
-    // Si decides usar la relación con el usuario, puedes agregar este método
-    public function usuario()
+    public function citas()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->hasMany(Cita::class);
     }
 }

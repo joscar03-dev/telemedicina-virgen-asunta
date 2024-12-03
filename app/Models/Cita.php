@@ -38,10 +38,12 @@ class Cita extends Model
     /**
      * Relación con el modelo Usuario (Paciente).
      */
+
     public function paciente()
     {
-        return $this->belongsTo(User::class, 'paciente_id');
+        return $this->belongsTo(Paciente::class);
     }
+
 
     /**
      * Relación con la tabla Disponibilidades.
