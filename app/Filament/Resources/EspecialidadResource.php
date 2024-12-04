@@ -6,6 +6,8 @@ use App\Filament\Resources\EspecialidadResource\Pages;
 use App\Filament\Resources\EspecialidadResource\RelationManagers;
 use App\Models\Especialidad;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +25,11 @@ class EspecialidadResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('nombre')
+                    ->required(),
+                Textarea::make('descripcion')
+                    ->label('Descripcion')
+                    ->rows(3),
             ]);
     }
 
@@ -31,7 +37,12 @@ class EspecialidadResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nombre')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('descripcion')
+                    ->label('Descripcion')
+                    ->searchable(),
             ])
             ->filters([
                 //
