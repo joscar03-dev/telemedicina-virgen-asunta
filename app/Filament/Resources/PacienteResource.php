@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PacienteResource\Pages;
 use App\Filament\Resources\PacienteResource\RelationManagers;
+use App\Filament\Resources\PacienteResource\RelationManagers\DocumentosRelationManager;
+use App\Filament\Resources\PacienteResource\RelationManagers\HistorialRelationManager;
 use App\Models\Paciente;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -75,11 +77,6 @@ class PacienteResource extends Resource
                     ->label('Número de Seguro Médico')
                     ->nullable()
                     ->maxLength(50),
-
-                Select::make('usuario_id')
-                    ->label('Usuario Asociado')
-                    ->relationship('usuario', 'name') // Relación con User (si aplica)
-                    ->nullable(),
             ]);
     }
 
@@ -114,9 +111,6 @@ class PacienteResource extends Resource
 
                 Tables\Columns\TextColumn::make('numero_seguro')
                     ->label('Número de Seguro'),
-
-                Tables\Columns\TextColumn::make('usuario.name')
-                    ->label('Usuario Asociado'),
             ])
             ->filters([
                 //
@@ -134,7 +128,8 @@ class PacienteResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DocumentosRelationManager::class,
+            HistorialRelationManager::class
         ];
     }
 
