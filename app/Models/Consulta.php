@@ -41,4 +41,9 @@ class Consulta extends Model
     {
         return $this->hasOneThrough(Medico::class, Cita::class);
     }
+
+    public function recetas()
+    {
+        return $this->hasMany(Recetas::class, 'consulta_id');
+    }
 }

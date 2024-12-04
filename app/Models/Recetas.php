@@ -9,6 +9,13 @@ class Recetas extends Model
 {
     use HasFactory;
 
+    protected $table = 'recetas';
+
+    protected $fillable = [
+        'consulta_id',
+        'detalles',
+    ];
+
     public function consulta()
     {
         return $this->belongsTo(Consulta::class);

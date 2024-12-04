@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentoPaciente extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'paciente_id',
+        'nombre_documento',
+        'tipo_documento'
+    ];
 
     public function paciente()
     {

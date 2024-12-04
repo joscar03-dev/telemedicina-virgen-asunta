@@ -19,8 +19,8 @@ class Cita extends Model
     protected $fillable = [
         'medico_id',
         'paciente_id',
-        'disponibilidad_id',
         'fecha',
+        'tipo_cita',
         'hora_inicio',
         'hora_fin',
         'estado',
@@ -51,5 +51,10 @@ class Cita extends Model
     public function disponibilidad()
     {
         return $this->belongsTo(Disponibilidad::class, 'disponibilidad_id');
+    }
+
+    public function consultas()
+    {
+        return $this->hasMany(Consulta::class, 'cita_id');
     }
 }
