@@ -30,7 +30,6 @@ class RoleResource extends Resource
                     ->multiple() // Permite seleccionar varios permisos
                     ->relationship('permissions', 'name') // Relación con el modelo Permission
                     ->preload() // Cargar los permisos sin necesidad de buscar
-                    ->required(),
             ]);
     }
 

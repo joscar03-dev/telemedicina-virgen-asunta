@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/reservar-cita', ReservarCita::class)->name('reservar.cita');
+
+Route::get('/reservar-cita', ReservarCita::class, 'index')->name('reservar.cita');

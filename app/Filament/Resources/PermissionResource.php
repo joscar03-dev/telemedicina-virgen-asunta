@@ -36,8 +36,7 @@ class PermissionResource extends Resource
                     ->email()
                     ->required()
                     ->unique('users', 'email') // Para crear
-                    ->unique('users', 'email')
-                    ->ignore(fn($record) => $record->id),
+                    ->unique('users', 'email'),
                 TextInput::make('password')
                     ->password()
                     ->dehydrateStateUsing(fn($state) => Hash::make($state))

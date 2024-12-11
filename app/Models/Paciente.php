@@ -11,6 +11,7 @@ class Paciente extends Model
 
     protected $fillable = [
         'nombre',
+        'numero_documento',
         'apellido',
         'correo',
         'telefono',

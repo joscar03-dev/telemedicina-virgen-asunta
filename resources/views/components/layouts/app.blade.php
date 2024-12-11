@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva tu cita médica</title>
     @livewireStyles
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>{{ $title ?? 'Page Title' }}</title>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>Reserva tu cita médica</h1>
-        </header>
-        <main>
-            @yield('content')  <!-- Aquí se cargará el contenido de tu formulario -->
-        </main>
-    </div>
+    {{ $slot }}
     @livewireScripts
 </body>
+
 </html>

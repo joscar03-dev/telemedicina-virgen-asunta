@@ -69,6 +69,6 @@ class ConsultasRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->hasMany(Recetas::class, 'consulta_id', 'recetas');;
+            ]);
     }
 }

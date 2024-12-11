@@ -1,156 +1,203 @@
-@extends('components.layouts.app')
-
-@section('content')
-    <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Reservar Cita</h2>
-
-        <form wire:submit.prevent="reservar" class="space-y-8">
-            <div class="flex items-center">
-                <input type="checkbox" wire:model="nuevoPaciente" id="nuevoPaciente"
-                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="nuevoPaciente" class="ml-2 block text-sm text-gray-900">Soy un nuevo paciente</label>
-            </div>
-
-            @if ($esNuevoPaciente)
-                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-                    <div class="px-4 py-5 sm:px-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">Información del Paciente</h3>
-                    </div>
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Nombre</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="text" wire:model="nombre" id="nombre"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Apellido</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="text" wire:model="apellido" id="apellido"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Correo Electrónico</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="email" wire:model="correo" id="correo"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="text" wire:model="telefono" id="telefono"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Dirección</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <textarea wire:model="direccion" id="direccion" rows="3"
-                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Fecha de Nacimiento</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="date" wire:model="fecha_nacimiento" id="fecha_nacimiento"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Género</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <select wire:model="sexo" id="sexo"
-                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        <option value="">Seleccione</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="femenino">Femenino</option>
-                                        <option value="otro">Otro</option>
-                                    </select>
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Número de Seguro</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    <input type="text" wire:model="numero_seguro" id="numero_seguro"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-            @endif
-
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Información de la Cita</h3>
-                </div>
-
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <!-- Campo Especialidad -->
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Especialidad</dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <select wire:model="especialidadSeleccionada" id="especialidadSeleccionada"
-                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option value="">Seleccione una especialidad</option>
-                                    @foreach ($especialidades as $especialidad)
-                                        <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </dd>
-                        </div>
-                        <!-- Campo Médico -->
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Médico</dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <select wire:model="medicoSeleccionado" id="medicoSeleccionado"
-                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    {{ empty($medicos) ? 'disabled' : '' }}>
-                                    <option value="">Seleccione un médico</option>
-                                    @foreach ($medicos as $medico)
-                                        <option value="{{ $medico->id }}">{{ $medico->usuario->nombre }}</option>
-                                    @endforeach
-                                </select>
-
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="pt-5">
-                <div class="flex justify-end">
-                    <button type="submit"
-                        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Reservar Cita
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        @if (session()->has('success'))
-            <div class="rounded-md bg-green-50 p-4 mt-8">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                            fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">
-                            {{ session('success') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        @endif
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
+    <!-- Buscar por Número de Documento -->
+    <div class="mb-6">
+        <label for="numero_documento" class="block text-sm font-medium text-gray-700">Número de Documento</label>
+        <div class="flex">
+            <input type="text" id="numero_documento" wire:model.defer="numero_documento"
+                class="mt-2 p-3 border border-gray-300 rounded-l-md w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Ingrese el número de documento">
+            <button type="button" wire:click="buscarPaciente"
+                class="mt-2 p-3 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Buscar
+            </button>
+        </div>
     </div>
-@endsection
+
+    @if ($paciente_id)
+        <!-- Información del paciente encontrado -->
+        <p class="text-gray-700">Paciente encontrado: <strong>{{ $nombre }} {{ $apellido }}</strong></p>
+    @else
+        @if ($showPacienteForm)
+            <!-- Formulario para Registrar Paciente -->
+            <form wire:submit.prevent="createPaciente" class="mt-6 bg-gray-50 p-6 rounded-md shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Registrar Paciente</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" id="nombre" wire:model="nombre"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('nombre')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
+                        <input type="text" id="apellido" wire:model="apellido"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('apellido')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
+                        <input type="email" id="correo" wire:model="correo"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('correo')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="text" id="telefono" wire:model="telefono"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('telefono')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+                        <input type="text" id="direccion" wire:model="direccion"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('direccion')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="fecha_nacimiento" class="block text-sm font-medium text-gray-700">Fecha de
+                            Nacimiento</label>
+                        <input type="date" id="fecha_nacimiento" wire:model="fecha_nacimiento"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('fecha_nacimiento')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="sexo" class="block text-sm font-medium text-gray-700">Sexo</label>
+                        <select id="sexo" wire:model="sexo"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                            <option value="">Seleccione</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                        </select>
+                        @error('sexo')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="numero_seguro" class="block text-sm font-medium text-gray-700">Número de
+                            Seguro</label>
+                        <input type="text" id="numero_seguro" wire:model="numero_seguro"
+                            class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        @error('numero_seguro')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <button type="submit"
+                    class="mt-4 w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Registrar Paciente
+                </button>
+            </form>
+        @endif
+    @endif
+
+    <!-- Formulario para Reservar Cita -->
+    @if (!$showPacienteForm && $paciente_id)
+        <form wire:submit.prevent="saveCita" class="mt-6 bg-gray-50 p-6 rounded-md shadow-md">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Reservar Cita</h2>
+
+            <div class="mb-4">
+                <label for="especialidad_id" class="block text-sm font-medium text-gray-700">Especialidad</label>
+                <select id="especialidad_id" wire:model="especialidad_id"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                    <option value="">Seleccione una especialidad</option>
+                    @foreach ($especialidades as $especialidad)
+                        <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                    @endforeach
+                </select>
+                @error('especialidad_id')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Botón para buscar médicos -->
+            <div class="mb-4">
+                <button wire:click="buscarMedicos" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                    Buscar médicos
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <label for="medico_id" class="block text-sm font-medium text-gray-700">Médico</label>
+                <select id="medico_id" wire:model="medico_id"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500"
+                    @if (!$medicos || $medicos->isEmpty()) disabled @endif>
+                    <option value="">Seleccione un médico</option>
+                    @foreach ($medicos as $medico)
+                        <option value="{{ $medico->id }}">{{ $medico->usuario->name }}</option>
+                    @endforeach
+                </select>
+                @if (!$medicos || $medicos->isEmpty())
+                    <span class="text-sm text-gray-500">No hay médicos disponibles para esta especialidad.</span>
+                @endif
+                @error('medico_id')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
+                <input type="date" id="fecha" wire:model="fecha"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                @error('fecha')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="hora_inicio" class="block text-sm font-medium text-gray-700">Hora Inicio</label>
+                <input type="time" id="hora_inicio" wire:model="hora_inicio"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                @error('hora_inicio')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="hora_fin" class="block text-sm font-medium text-gray-700">Hora Fin</label>
+                <input type="time" id="hora_fin" wire:model="hora_fin"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                @error('hora_fin')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="tipo_cita" class="block text-sm font-medium text-gray-700">Tipo de Cita</label>
+                <input type="text" id="tipo_cita" wire:model="tipo_cita"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                @error('tipo_cita')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
+                <textarea id="observaciones" wire:model="observaciones"
+                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500"
+                    placeholder="Escribe cualquier observación adicional"></textarea>
+                @error('observaciones')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <button type="submit"
+                class="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Reservar Cita
+            </button>
+        </form>
+    @endif
+
+    <!-- Mensajes -->
+    @if (session()->has('message'))
+        <div class="mt-4 p-4 bg-green-100 text-green-800 rounded-md">
+            {{ session('message') }}
+        </div>
+    @endif
+</div>

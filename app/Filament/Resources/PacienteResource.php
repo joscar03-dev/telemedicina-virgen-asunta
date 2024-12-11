@@ -37,6 +37,10 @@ class PacienteResource extends Resource
                     ->label('Nombre')
                     ->required()
                     ->maxLength(255),
+                TextInput::make('numero_documento')
+                    ->label('DNI')
+                    ->required()
+                    ->maxLength(15),
 
                 TextInput::make('apellido')
                     ->label('Apellido')
