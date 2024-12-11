@@ -12,6 +12,7 @@ use App\Models\Medico;
 use App\Models\Paciente;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -71,9 +72,19 @@ class CitaResource extends Resource
                         'confirmada' => 'confirmada',
                         'cancelada' => 'cancelada',
                     ]),
+                TextInput::make('meet_url')
+                    ->label('Meet url'),
                 Textarea::make('observaciones')
                     ->label('Observaciones')
                     ->rows(3),
+                FileUpload::make('voucher') // 'voucher' es el nombre del campo en la base de datos
+                    ->label('Subir Voucher')
+                    ->image() // Para permitir solo imágenes, si se desea
+                    ->disk('public') // Establece el disco de almacenamiento (configurado en config/filesystems.php)
+                    ->directory('vouchers') // Carpeta donde se guardarán los archivos
+                    ->maxSize(1024) // Tamaño máximo del archivo en KB (1 MB)
+                    ->required() // Opcional: puedes hacerlo obligatorio
+                    ->helperText('Por favor sube el archivo del voucher en formato adecuado.')
             ]);
     }
 

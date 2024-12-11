@@ -24,6 +24,8 @@ class Cita extends Model
         'hora_inicio',
         'hora_fin',
         'estado',
+        'voucher',
+        'meet_url',
         'observaciones',
     ];
 

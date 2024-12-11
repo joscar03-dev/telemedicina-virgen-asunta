@@ -48,6 +48,8 @@
         </p>
         <p style="margin-bottom: 20px;"><strong style="color: #4a90e2;">Observaciones:</strong>
             {{ $cita->observaciones }}</p>
+        <p style="margin-bottom: 20px;"><strong style="color: #4a90e2;">url meet:</strong>
+            {{ $cita->meet_url}}</p>
 
         <p style="background-color: #e8f4ff; padding: 15px; border-radius: 5px; text-align: center; font-weight: bold;">
             ¡Te esperamos para tu consulta!</p>
