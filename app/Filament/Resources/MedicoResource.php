@@ -2,8 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\DisponibilidadRelationManagerResource\RelationManagers\MedicoRelationManager as RelationManagersMedicoRelationManager;
 use App\Filament\Resources\MedicoResource\Pages;
 use App\Filament\Resources\MedicoResource\RelationManagers;
+use App\Filament\Resources\MedicoResource\RelationManagers\DisponibilidadesRelationManager;
+use App\Filament\Resources\MedicoResource\RelationManagers\MedicoRelationManager;
 use App\Models\Especialidad;
 use App\Models\Medico;
 use App\Models\User;
@@ -81,7 +84,7 @@ class MedicoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DisponibilidadesRelationManager::class,
         ];
     }
 

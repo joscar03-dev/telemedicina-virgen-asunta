@@ -19,26 +19,20 @@ class ReservarCita extends Component
 
     // Lista dinámica de médicos filtrados por especialidad
     public $medicos = [];
+    public $disponibilidades = []; // Almacena las disponibilidades
 
     protected $rules = [
         // Validaciones para la cita
         'especialidad_id' => 'required|exists:especialidades,id',
         'medico_id' => 'required|exists:medicos,id',
         'paciente_id' => 'nullable|exists:pacientes,id',
-        'fecha' => 'required|date',
+        'fecha' => '',
         'tipo_cita' => 'required|string|max:50',
-        'hora_inicio' => 'required|date_format:H:i',
-        'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
+        'hora_inicio' => '',
+        'hora_fin' => '',
         'estado' => 'required|string|in:pendiente,confirmada,cancelada',
         'observaciones' => 'nullable|string|max:255',
     ];
-
-    /* public function updatedEspecialidadId()
-    {
-        // Filtrar médicos por especialidad seleccionada
-        $this->medicos = Medico::where('especialidad_id', $this->especialidad_id)->with('usuario')->get();
-        $this->medico_id = null; // Reiniciar selección de médico al cambiar la especialidad
-    } */
 
     public function buscarMedicos()
     {
@@ -47,6 +41,16 @@ class ReservarCita extends Component
             $this->medicos = Medico::where('especialidad_id', $this->especialidad_id)
                 ->with('usuario', 'disponibilidades')
                 ->get();
+        }
+    }
+
+    // Método para obtener las disponibilidades del médico seleccionado
+    public function buscarDisponibilidad()
+    {
+        if ($this->medico_id) {
+            // Obtener el médico y sus disponibilidades
+            $medico = Medico::with('disponibilidades')->find($this->medico_id);
+            $this->disponibilidades = $medico ? $medico->disponibilidades : [];
         }
     }
 

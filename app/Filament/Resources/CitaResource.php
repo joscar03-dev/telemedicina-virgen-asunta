@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CitaResource\Pages;
+use App\Filament\Resources\CitaResource\Pages\SendCitasEmail;
 use App\Filament\Resources\CitaResource\RelationManagers;
 use App\Filament\Resources\CitaResource\RelationManagers\ConsultasRelationManager;
 use App\Models\Cita;
@@ -80,6 +81,7 @@ class CitaResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id'),
                 TextColumn::make('medico.usuario.name')
                     ->label('Médico')
                     ->sortable()
@@ -106,6 +108,10 @@ class CitaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('sendEmail') // Acción personalizada
+                    ->label('Enviar Correo') // Nombre del botón
+                    ->color('primary') // Color del botón
+                    ->url(fn(Cita $record) => route('filament.admin.resources.citas.send-mail', ['record' => $record->id]))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -127,6 +133,7 @@ class CitaResource extends Resource
             'index' => Pages\ListCitas::route('/'),
             'create' => Pages\CreateCita::route('/create'),
             'edit' => Pages\EditCita::route('/{record}/edit'),
+            'send-mail' => Pages\SendCitasEmail::route('/send-email/{record}'),
         ];
     }
 }

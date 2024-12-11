@@ -19,6 +19,17 @@
     @else
         @if ($showPacienteForm)
             <!-- Formulario para Registrar Paciente -->
+            {{-- <form wire:submit.prevent="createPaciente" class="mt-6 bg-gray-50 p-6 rounded-md shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Registrar Paciente</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Aquí irían los campos del formulario de paciente -->
+                </div>
+                <button type="submit"
+                    class="mt-4 w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Registrar Paciente
+                </button>
+            </form> --}}
             <form wire:submit.prevent="createPaciente" class="mt-6 bg-gray-50 p-6 rounded-md shadow-md">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Registrar Paciente</h2>
 
@@ -141,35 +152,36 @@
                 @if (!$medicos || $medicos->isEmpty())
                     <span class="text-sm text-gray-500">No hay médicos disponibles para esta especialidad.</span>
                 @endif
-                @error('medico_id')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
             </div>
 
+            <!-- Botón de "Buscar Disponibilidad" siempre visible -->
             <div class="mb-4">
-                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
-                <input type="date" id="fecha" wire:model="fecha"
-                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
-                @error('fecha')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
+                <button wire:click="buscarDisponibilidad"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    @if (!$medico_id) disabled @endif>
+                    Buscar Disponibilidad
+                </button>
             </div>
-            <div class="mb-4">
-                <label for="hora_inicio" class="block text-sm font-medium text-gray-700">Hora Inicio</label>
-                <input type="time" id="hora_inicio" wire:model="hora_inicio"
-                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
-                @error('hora_inicio')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label for="hora_fin" class="block text-sm font-medium text-gray-700">Hora Fin</label>
-                <input type="time" id="hora_fin" wire:model="hora_fin"
-                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
-                @error('hora_fin')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+
+            <!-- Fechas disponibles del médico -->
+            @if ($disponibilidades && $disponibilidades->isNotEmpty())
+                <div class="mb-4">
+                    <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
+                    <select id="fecha" wire:model="fecha"
+                        class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
+                        <option value="">Seleccione una fecha</option>
+                        @foreach ($disponibilidades as $disponibilidad)
+                            <option value="{{ $disponibilidad->fecha }}">{{ $disponibilidad->fecha }}</option>
+                        @endforeach
+                    </select>
+                    @error('fecha')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            @else
+                <p class="text-sm text-gray-500">No hay disponibilidades para este médico.</p>
+            @endif
+
             <div class="mb-4">
                 <label for="tipo_cita" class="block text-sm font-medium text-gray-700">Tipo de Cita</label>
                 <input type="text" id="tipo_cita" wire:model="tipo_cita"
@@ -178,15 +190,7 @@
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="mb-4">
-                <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
-                <textarea id="observaciones" wire:model="observaciones"
-                    class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500"
-                    placeholder="Escribe cualquier observación adicional"></textarea>
-                @error('observaciones')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+
             <button type="submit"
                 class="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                 Reservar Cita
