@@ -68,9 +68,8 @@ class CitaResource extends Resource
                 Select::make('tipo_cita')
                     ->label('Tipo de Cita')
                     ->options([
-                        'pendiente' => 'pendiente',
-                        'confirmada' => 'confirmada',
-                        'cancelada' => 'cancelada',
+                        'presencial' => 'Presencial',
+                        'telemedicina' => 'Telemedicina',
                     ]),
                 TextInput::make('meet_url')
                     ->label('Meet url'),
@@ -113,6 +112,8 @@ class CitaResource extends Resource
                 TextColumn::make('observaciones')
                     ->label('Observaciones')
                     ->wrap(),
+                TextColumn::make('tipo_cita')
+                    ->label('Tipo de cita'),
             ])
             ->filters([
                 //

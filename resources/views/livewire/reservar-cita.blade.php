@@ -193,9 +193,9 @@
                     <label for="tipo_cita" class="block text-sm font-medium text-gray-700">Tipo de Cita</label>
                     <select id="tipo_cita" wire:model="tipo_cita"
                         class="mt-2 p-3 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-500">
-                        <option value="" disabled selected>Seleccione un tipo de cita</option>
-                        <option value="telemedicina">Telemedicina</option>
+                        <option value="none">Seleccione un tipo de cita</option>
                         <option value="presencial">Presencial</option>
+                        <option value="telemedicina">Telemedicina</option>
                         <!-- Puedes añadir más opciones aquí -->
                     </select>
                     @error('tipo_cita')
@@ -228,3 +228,7 @@
     </div>
 
 </div>
+
+
+{{-- diseño nuevo para el modal de crearpaciente --}}
+

@@ -7,15 +7,20 @@ use App\Models\Medico;
 use App\Models\Paciente;
 use App\Models\Especialidad;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+
 
 class ReservarCita extends Component
 {
+    use WithFileUploads;
     // Variables para la búsqueda y creación de pacientes
     public $numero_documento, $paciente_id, $nombre, $apellido, $correo, $telefono, $direccion, $fecha_nacimiento, $sexo, $numero_seguro;
     public $showPacienteForm = false; // Alternar entre crear y buscar paciente
 
     // Variables para la reserva de cita
     public $especialidad_id, $medico_id, $fecha, $tipo_cita, $hora_inicio, $hora_fin, $estado = 'pendiente', $observaciones;
+
+    public $url_meet, $voucher;
 
     // Lista dinámica de médicos filtrados por especialidad
     public $medicos = [];
@@ -32,6 +37,8 @@ class ReservarCita extends Component
         'hora_fin' => '',
         'estado' => 'required|string|in:pendiente,confirmada,cancelada',
         'observaciones' => 'nullable|string|max:255',
+        'url_meet' => 'nullable|url|max:255', // Valida que sea una URL válida
+        'voucher' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
     ];
 
     public function buscarMedicos()
@@ -106,6 +113,10 @@ class ReservarCita extends Component
     public function saveCita()
     {
         $this->validate();
+        $voucherPath = null;
+        if ($this->voucher) {
+            $voucherPath = $this->voucher->store('vouchers', 'public'); // Guarda en la carpeta "vouchers" del disco "public"
+        }
 
         Cita::create([
             'medico_id' => $this->medico_id,
@@ -116,6 +127,8 @@ class ReservarCita extends Component
             'hora_fin' => $this->hora_fin,
             'estado' => $this->estado,
             'observaciones' => $this->observaciones,
+            'url_meet' => $this->url_meet, // Almacena la URL de Meet
+            'voucher' => $voucherPath, // Ruta del archivo cargado
         ]);
 
         $this->reset();
